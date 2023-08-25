@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
-import PasswordGenerator from './component/passwordGenerator';
+import PasswordGenerator from './component/passwordGenerator'
 
 const App = () => {
   return (
-    <React.Fragment>
+    <React.Fragment> 
       <PasswordGenerator/>
     </React.Fragment>
   );
