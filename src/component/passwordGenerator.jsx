@@ -5,7 +5,7 @@ import './css/passwordGen.css'
 
 const PasswordGenerator = () => {
     
-    let [state, setState] = useState({generatedPassword : "",passwordLength: 10,number : false,
+    let [state, setState] = useState({generatedPassword : "",passwordLength: 10,number : true,
     upper: false,lower:false,symbol: false
     })
 
@@ -76,7 +76,7 @@ const PasswordGenerator = () => {
                                                 name='number'
                                                 type='checkbox' className='form-check-input' />
                                             </span>
-                                            <input type='num' disabled={true} className='form-control' placeholder='Number' />
+                                            <input type='num'  className='form-control' placeholder='Number' />
                                         </div>
                                     </div>
                                     <div className="mb-2">
@@ -87,7 +87,7 @@ const PasswordGenerator = () => {
                                                 name='upper'
                                                 type='checkbox' className='form-check-input' />
                                             </span>
-                                            <input type='text' disabled={true} className='form-control' placeholder='Uppercase Letters' />
+                                            <input type='text' className='form-control' placeholder='Uppercase Letters' />
                                         </div>
                                     </div>
                                     <div className="mb-2">
@@ -98,7 +98,7 @@ const PasswordGenerator = () => {
                                                 name='lower'
                                                 type='checkbox' className='form-check-input' />
                                             </span>
-                                            <input type='text' disabled={true} className='form-control' placeholder='Lowecase Letters' />
+                                            <input type='text' className='form-control' placeholder='Lowecase Letters' />
                                         </div>
                                     </div>
                                     <div className="mb-2">
@@ -109,11 +109,11 @@ const PasswordGenerator = () => {
                                                 name='symbol'
                                                 type='checkbox' className='form-check-input' />
                                             </span>
-                                            <input type='text' disabled={true} className='form-control' placeholder='Special Cahracters' />
+                                            <input type='text' className='form-control' placeholder='Special Cahracters' />
                                         </div>
                                     </div>
                                     <div className="mb-2">
-                                        <input type='submit' value='Generate' className='btn btn-outline-dark'/>
+                                        <input type='submit' value='Generate Password' className='btn btn-outline-dark'/>
                                     </div>
                                 </form>
                                 <div>
