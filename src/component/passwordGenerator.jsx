@@ -5,13 +5,15 @@ import './css/passwordGen.css'
 
 const PasswordGenerator = () => {
     
-    let [state, setState] = useState({generatedPassword : "",passwordLength: 10,number : true,
+    let [state, setState] = useState({generatedPassword : "",passwordLength: 10,number : false,
     upper: false,lower:false,symbol: false
     })
 
-    let [passwordHistory, setPasswordHistory] = useState([]);
+    //error Handler
+    let [showMissingOptionsError, setShowMissingOptionsError] = useState(false); 
 
     //Password History
+    let [passwordHistory, setPasswordHistory] = useState([]);
     useEffect(() => {
         const storedHistory = localStorage.getItem('passwordHistory');
         if (storedHistory) {
@@ -22,7 +24,7 @@ const PasswordGenerator = () => {
         localStorage.setItem('passwordHistory', JSON.stringify(passwordHistory));
     }, [passwordHistory]);
 
-
+    //input 
     let updateInput = (e) => {setState({...state, 
             [e.target.name] : e.target.value
         })
@@ -30,15 +32,24 @@ const PasswordGenerator = () => {
     let updateCheckbox = (e) => {setState({...state,
             [e.target.name] : e.target.checked
         })
+        setShowMissingOptionsError(false)
     }
 
     //Submit Handler
     let submit = (e) => {
         e.preventDefault();
+
+        if (!state.number && !state.upper && !state.lower && !state.symbol) {
+            setShowMissingOptionsError(true);
+            return;
+        }
+       
         let passwordObject = RandomPassword.getPasswordObject(state);
         let genPassword = RandomPassword.generatePassword(passwordObject, state.passwordLength);
         setPasswordHistory([genPassword, ...passwordHistory].slice(0, 5));
         setState({...state, generatedPassword:genPassword});
+        setShowMissingOptionsError(false);
+        
     }
 
     // To Copy the Code
@@ -76,7 +87,7 @@ const PasswordGenerator = () => {
                                                 name='number'
                                                 type='checkbox' className='form-check-input' />
                                             </span>
-                                            <input type='num'  className='form-control' placeholder='Number' />
+                                            <input type='text' disabled  className='form-control' placeholder='Number' />
                                         </div>
                                     </div>
                                     <div className="mb-2">
@@ -87,7 +98,7 @@ const PasswordGenerator = () => {
                                                 name='upper'
                                                 type='checkbox' className='form-check-input' />
                                             </span>
-                                            <input type='text' className='form-control' placeholder='Uppercase Letters' />
+                                            <input type='text' disabled className='form-control' placeholder='Uppercase Letters' />
                                         </div>
                                     </div>
                                     <div className="mb-2">
@@ -98,7 +109,7 @@ const PasswordGenerator = () => {
                                                 name='lower'
                                                 type='checkbox' className='form-check-input' />
                                             </span>
-                                            <input type='text' className='form-control' placeholder='Lowecase Letters' />
+                                            <input type='text' disabled  className='form-control' placeholder='Lowecase Letters' />
                                         </div>
                                     </div>
                                     <div className="mb-2">
@@ -109,11 +120,14 @@ const PasswordGenerator = () => {
                                                 name='symbol'
                                                 type='checkbox' className='form-check-input' />
                                             </span>
-                                            <input type='text' className='form-control' placeholder='Special Cahracters' />
+                                            <input type='text' disabled className='form-control' placeholder='Special Cahracters' />
                                         </div>
                                     </div>
                                     <div className="mb-2">
                                         <input type='submit' value='Generate Password' className='btn btn-outline-dark'/>
+                                        {showMissingOptionsError && (
+                                            <p className="text-danger mt-2">Please select at least one option.</p>
+                                        )}
                                     </div>
                                 </form>
                                 <div>
